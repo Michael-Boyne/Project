@@ -49,8 +49,41 @@ thousand_meteorite <- zero_meteorite %>%
   filter(mass_in_grams > 1000)
 thousand_meteorite
 
+* Finally I ordered the data by year of discovery.
+
+ordered_meteorite <- thousand_meteorite %>%
+  arrange(desc(year))
+
+ordered_meteorite
+
 
 
 * The next stage of this project is to take this cleaned up tibble and gather some information.
 
-* First 
+* First, discovering the 10 largest meteorites by mass, with their names and year of discovery.
+
+top_ten_meteorites <- filtered_meteorite %>%
+  slice_max(mass_in_grams, n = 10) %>%
+  select(meteorite_name, mass_in_grams, year)
+
+top_ten_meteorites
+
+* Next was to discern the average weight of meteorites that were recorded falling or found.
+
+avg_meteorite <- filtered_meteorite %>%
+  group_by(fall) %>%
+  summarise(avg_meteorite_size = mean(mass_in_grams))
+
+avg_meteorite
+
+* Lastly, to discover how many meteorites have been discovered in each year of the data.
+
+yearly_meteorite <- filtered_meteorite %>%
+  group_by(year) %>%
+  filter(year > 2000) %>%
+  tally() %>%
+  arrange(desc(n))
+
+yearly_meteorite
+
+
